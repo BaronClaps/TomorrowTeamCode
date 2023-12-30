@@ -234,7 +234,7 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
                 if (blocks[i].x > 70 && blocks[i].x < 140) {
                     telemetry.addLine("Hooray!!! Area 2");
                     hangservo.setPosition(0.6);
-                    //clawrotate.setPosition(.3); mhm
+                    //clawrotate.setPosition(.3);
                     //armROT.setPosition(0.095);
                     move(750,750,750,750); //move away from wall
                     sleep(400);
