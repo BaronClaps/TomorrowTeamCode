@@ -203,6 +203,7 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
                     sleep(400);
                     move(200,-200,-200,200); //strafe toward scoring 1
                     sleep(400);
+
                     //armROT.setPosition(0.17); //sets arm to scoring position
                     //sleep(400);
                     //clawrotate.setPosition(0.4); //lines up claw
