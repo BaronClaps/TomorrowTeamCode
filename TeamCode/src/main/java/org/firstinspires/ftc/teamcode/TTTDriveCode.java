@@ -82,9 +82,10 @@ public class TTTDriveCode extends LinearOpMode {
     private Servo clawrotate = null;
     private int bspeed = 2;
     double rfspeed;
-    double lfspeed;
-    double rbspeed;
-    double lbspeed;
+    private double lfspeed;
+    private double rbspeed;
+    private double lbspeed;
+    private double armR;
 
     @Override
     public void runOpMode() {
@@ -127,7 +128,7 @@ public class TTTDriveCode extends LinearOpMode {
         waitForStart();
         runtime.reset();
         hangservo.setPosition(0.5);
-
+        armR = 0.095;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
@@ -150,8 +151,7 @@ public class TTTDriveCode extends LinearOpMode {
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
 
-            double armR = 0.095;
-            armROT.setPosition(armR);
+
             if(gamepad2.b)
             {
                 arm.setPower(1);
@@ -189,7 +189,7 @@ public class TTTDriveCode extends LinearOpMode {
                 airplane.setPosition(0.5);
             }
             //-----------------------HANG--------------//
-            if (gamepad2.dpad_up)
+            /*if (gamepad2.dpad_up)
             {
                 hang.setPower(1);
             }
@@ -220,14 +220,14 @@ public class TTTDriveCode extends LinearOpMode {
                //sleep(200);
                //armROT.setPosition(0.095);
            }
-
+*/
             //-------------Arm Rotate---------------------------------//
-
+            armROT.setPosition(armR);
             if (gamepad2.left_bumper){
-               armR =+ 0.01;
+                armR = armR + 0.05;
            }
            if (gamepad2.right_bumper){
-               armR =- 0.01;
+               armR = armR - 0.05;
             }
             /*if (gamepad2.left_bumper)
             {
