@@ -236,7 +236,7 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
                     sleep(100);
                     arm(1800);// pulls the arm back
                     sleep(100);
-                    clawright.setPosition(0);// closes the claw
+                    clawright.setPosition(0);//e closes the claw
                     sleep(40000);
                 }
 

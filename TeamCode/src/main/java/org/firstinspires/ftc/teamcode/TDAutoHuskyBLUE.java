@@ -229,7 +229,7 @@ double clawR = 0.4;
                     move(-300,-300, -300, -300);
                     sleep(400);
                     clawright.setPosition(ClosedRight);
-                    //sleep(400);
+                    //sleep(400);/
                     //arm(-1800);
                     sleep(400);
                     turn(-1000,-1000,1000,1000);
