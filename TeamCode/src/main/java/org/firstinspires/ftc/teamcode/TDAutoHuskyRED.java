@@ -175,55 +175,13 @@ public class TDAutoHuskyRED extends LinearOpMode{
                 //----------------------------1----------------------------\\
                 if (blocks[i].x < 80) {
                     telemetry.addLine("Hooray!!! Area 1");
-                    hangservo.setPosition(0.67);
                     armROT.setPosition(0.095);
                     clawrotate.setPosition(0.3);
                     sleep(400);
                     move(400,400,400,400);//move away from wall
                     sleep(400);
-                    turn(-450, -450, 450, 450);//turns to face zone 1
+                    turn(-300, -300, 300, 300);//turns to face zone 1
                     sleep(400);
-                    arm(-1800); //pushes arm to scoring position
-                    sleep(400);
-                    move(25,25,25,25);
-                    sleep(200);
-                    clawleft.setPosition(0.2);//scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(100);
-                    arm(1800);// pulls the arm back
-                    sleep(100);
-                    clawleft.setPosition(0);// closes the claw
-                    sleep(400);
-                    turn(750,750,-750,-750);// turns to face backdrop
-                    sleep(100);
-                    turn(750,750,-750,-750);// turns to face backdrop
-                    sleep(100);
-                    move(1125,1125,1125,1125);// drives toward backdrop
-                    sleep(100);
-                    move(-1300, 1300, 1300, -1300); //strafe toward scoring 1
-                    sleep(100);
-                    armROT.setPosition(0.17); //sets arm to scoring position
-                    sleep(100);
-                    clawrotate.setPosition(0.4); //lines up claw
-                    sleep(200);
-                    arm(-1200);
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(400);
-                    clawright.setPosition(0);
-                    sleep(200);
-                    clawright.setPosition(0.2);
-                    sleep(40);
-                    clawrotate.setPosition(0.3);
-                    sleep(40);
-                    arm(1200);
-                    sleep(100);
-                    move(-200,-200,-200,-200); //backs up from backdrop
-                    sleep(400);
-                    armROT.setPosition(0.095);
-                    move(1700, -1700, -1700, 1700);
-                    sleep(100);
-                    move(700,700,700,700);
-                    sleep(40);
                 } else {
 
                 }
@@ -234,45 +192,8 @@ public class TDAutoHuskyRED extends LinearOpMode{
                     armROT.setPosition(0.095);
                     clawrotate.setPosition(0.3);
                     sleep(400);
-                    move(750,750,750,750); //move away from wall
+                    move(400,400,400,400);//move away from wall
                     sleep(400);
-                    arm(-1200); //pushes arm to scoring position
-                    sleep(200);
-                    clawleft.setPosition(0.2);//scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(100);
-                    arm(1200); //pulls the arm back
-                    sleep(100);
-                    clawleft.setPosition(0);// closes the claw
-                    sleep(400);
-                    turn(900,900,-900,-900);// turns to face backdrop
-                    sleep(400);
-                    move(1125,1125,1125,1125);// drives toward backdrop
-                    sleep(400);
-                    sleep(400);
-                    armROT.setPosition(0.17); //sets arm to scoring position
-                    sleep(400);
-                    clawrotate.setPosition(0.4); //lines up claw
-                    sleep(400);
-                    arm(-1200); //pushes arm to scoring position
-                    sleep(400);
-                    move(350,350,350,350); //move to the board
-                    sleep(400);
-                    clawright.setPosition(0); //drops pixel
-                    sleep(400);
-                    clawright.setPosition(0.2); //closes claw
-                    sleep(400);
-                    clawrotate.setPosition(0.3); //returns claw to starting position
-                    sleep(400);
-                    arm(1200); //pulls arm back
-                    sleep(400);
-                    armROT.setPosition(0.095); //returns arm to starting position
-                    sleep(400);
-                    move(-200,-200,-200,-200); //backs up from backdrop
-                    sleep(400);
-                    move(1700, -1700, -1700, 1700); //strafes to parking zone
-                    sleep(400);
-                    move(650,650,650,650); //move up into to parking zone
-                    sleep(40000);
                 } else {
 
                 }
@@ -283,52 +204,10 @@ public class TDAutoHuskyRED extends LinearOpMode{
                     armROT.setPosition(0.095);
                     clawrotate.setPosition(0.3);
                     sleep(400);
-                    move(400,400,400,400); //move away from wall
+                    move(400,400,400,400);//move away from wall
                     sleep(400);
-                    turn(425, 425, -425, -425); //turns to face zone 1
-                    sleep(100);
-                    arm(-1800); //pushes arm to scoring position
-                    sleep(200);
-                    clawleft.setPosition(0); //scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(100);
-                    arm(1800); //pulls the arm back
-                    sleep(100);
-                    clawleft.setPosition(0.2); //closes the claw
+                    turn(300, 300, -300, -300);//turns to face zone 1
                     sleep(400);
-                    turn(750,750,-750,-750);// turns to face backdrop
-                    sleep(100);
-                    sleep(100);
-                    move(1125,1125,1125,1125);// drives toward backdrop
-                    sleep(100);
-                    move(-1000, 1000, 1000, -1000); //strafe toward scoring 1
-                    sleep(100);
-                    armROT.setPosition(0.17);
-                    sleep(100);
-                    clawrotate.setPosition(0.4);
-                    sleep(200);
-                    arm(-1400);
-                    sleep(100);
-                    move(200,200,200,200);
-                    sleep(400);
-                    clawright.setPosition(0);
-                    sleep(200);
-                    clawright.setPosition(0.2);
-                    sleep(40);
-                    clawrotate.setPosition(0.3);
-                    sleep(40);
-                    arm(1400);
-                    sleep(100);
-                    move(-200,-200,-200,-200); //backs up from backdrop
-                    sleep(400);
-                    clawleft.setPosition(0.175);
-                    sleep(100);
-                    armROT.setPosition(0.095);
-                    move(1200, -1200, -1200, 1200);
-                    sleep(100);
-                    move(600,600,600,600);
-                    sleep(40);
-
-                    //pixelspot = 3;
                 }
 
             }

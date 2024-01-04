@@ -81,11 +81,12 @@ public class TTTDriveCode extends LinearOpMode {
     private Servo clawright = null;
     private Servo clawrotate = null;
     private int bspeed = 2;
-    double rfspeed;
+    private double rfspeed;
     private double lfspeed;
     private double rbspeed;
     private double lbspeed;
     private double armR;
+
 
     @Override
     public void runOpMode() {
@@ -128,7 +129,7 @@ public class TTTDriveCode extends LinearOpMode {
         waitForStart();
         runtime.reset();
         hangservo.setPosition(0.5);
-        armR = 0.095;
+        armR = 0.11;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
@@ -181,12 +182,11 @@ public class TTTDriveCode extends LinearOpMode {
 
             if(gamepad1.y)
             {
-                hangservo.setPosition(0.5);
-                airplane.setPosition(1);
+                airplane.setPosition(0);
             }
             else
             {
-                airplane.setPosition(0.5);
+                airplane.setPosition(.5);
             }
             //-----------------------HANG--------------//
             /*if (gamepad2.dpad_up)
@@ -224,11 +224,26 @@ public class TTTDriveCode extends LinearOpMode {
             //-------------Arm Rotate---------------------------------//
             armROT.setPosition(armR);
             if (gamepad2.left_bumper){
-                armR = armR + 0.05;
-           }
-           if (gamepad2.right_bumper){
-               armR = armR - 0.05;
+                armR += 0.05;
+            }else {
+                armR += 0;
             }
+            if (gamepad2.right_bumper){
+                armR -= 0.05;
+            }else {
+                armR += 0;
+            }
+            /*if (gamepad2.left_bumper){
+                armROT.setPosition(0.27);
+            } else{
+
+            }
+            if (gamepad2.right_bumper){
+                armROT.setPosition(0.125);
+            }else{
+
+            }
+
             /*if (gamepad2.left_bumper)
             {
                armROT.setPosition(0.095);
@@ -261,7 +276,6 @@ public class TTTDriveCode extends LinearOpMode {
             if(gamepad2.y)
             {
                 clawrotate.setPosition(0.3);
-
             }
 
             if(gamepad2.right_stick_button)
@@ -303,15 +317,15 @@ public class TTTDriveCode extends LinearOpMode {
             }
 
             // Send calculated power to wheels
-                leftFrontDrive.setPower(lfspeed);
-                rightFrontDrive.setPower(rfspeed);
-                leftBackDrive.setPower(lbspeed);
-                rightBackDrive.setPower(rbspeed);
+            leftFrontDrive.setPower(lfspeed);
+            rightFrontDrive.setPower(rfspeed);
+            leftBackDrive.setPower(lbspeed);
+            rightBackDrive.setPower(rbspeed);
 
-                // Show the elapsed game time and wheel power.
-                telemetry.addData("Status", "Run Time: " + runtime.toString());
-                telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
-                telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-                telemetry.update();
+            // Show the elapsed game time and wheel power.
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
+            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            telemetry.update();
 
         }}}
