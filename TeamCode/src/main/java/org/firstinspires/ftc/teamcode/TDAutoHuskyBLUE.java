@@ -99,15 +99,16 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
     private Servo clawleft  = null; //es1
     private Servo clawright = null; //es2
     private Servo hangservo = null; //es4
-    double ScoringLeft = 0.2;
-    double ScoringRight = 0;
+    double ClosedLeft = 0;
+    double ClosedRight = 0.2;
     double ScoringClaw = 0.4;
-    double ScoringArm = 0.17;
-    double OpenLeft = 0;
-    double OpenRight = 0.2;
+    double ScoringArm = 0.23;
+    double OpenLeft = 0.2;
+    double OpenRight = 0;
     double OpenClaw = 0.6;
     double OpenArm = 0.975;
-
+double armR;
+double clawR = 0.4;
 
 
 
@@ -138,7 +139,7 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
         clawleft.setPosition(0);
         clawright.setPosition(0.2);
         sleep(400);
-        clawrotate.setPosition(0.6);
+
 
         //TODO initialize the sensors and motors you added
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -173,7 +174,8 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-
+            armROT.setPosition(armR);
+            clawrotate.setPosition(clawR);
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -185,7 +187,7 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
                 telemetry.addData("location?", blocks[i].x);// this gives you just x
                 //TODO ensure your x values of the husky lens are appropriate to the desired areas
                 //----------------------------1----------------------------\\
-                if (blocks[i].x < 80) {
+                if (blocks[i].x < 100) {
                     telemetry.addLine("Hooray!!! Area 1");
                     armROT.setPosition(0.15);
                     clawrotate.setPosition(.3);
@@ -215,29 +217,30 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 80 && blocks[i].x < 140) {
+                if (blocks[i].x > 100 && blocks[i].x < 140) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    move(400,400,400,400);//move away from wall
+                    armR = 0.1175;
+                    move(1050,1050,1050,1050);//move away from wall
                     sleep(400);
-                    arm(1800);
-                    sleep(400);
+                   // arm(1800);
+                    //sleep(400);
                     clawright.setPosition(OpenRight);
                     sleep(400);
-                    move(-100,-100, -100, -100);
+                    move(-300,-300, -300, -300);
                     sleep(400);
-                    clawright.setPosition(ScoringRight);
+                    clawright.setPosition(ClosedRight);
+                    //sleep(400);
+                    //arm(-1800);
                     sleep(400);
-                    arm(-1800);
+                    turn(-1000,-1000,1000,1000);
                     sleep(400);
-                    turn(-900,-900,900,900);
+                    move(1300,1300,1300,1300);
                     sleep(400);
-                    move(1750,1750,1750,1750);
+                    armR = ScoringArm;
                     sleep(400);
                     arm(1500);
                     sleep(400);
-                    armROT.setPosition(ScoringArm);
-                    sleep(400);
-                    clawrotate.setPosition(ScoringClaw);
+                    clawR = ScoringClaw;
                     sleep(400);
                     clawleft.setPosition(OpenLeft);
                     sleep(400);
