@@ -185,7 +185,7 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
                 telemetry.addData("location?", blocks[i].x);// this gives you just x
                 //TODO ensure your x values of the husky lens are appropriate to the desired areas
                 //----------------------------1----------------------------\\
-                if (blocks[i].x < 70) {
+                if (blocks[i].x < 80) {
                     telemetry.addLine("Hooray!!! Area 1");
                     armROT.setPosition(0.15);
                     clawrotate.setPosition(.3);
@@ -215,13 +215,9 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 70 && blocks[i].x < 140) {
+                if (blocks[i].x > 80 && blocks[i].x < 140) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    hangservo.setPosition(0.6);
-                    sleep(400);
                     move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(-225, -225, 225, 225);//turns to face zone 1
                     sleep(400);
                     arm(1800);
                     sleep(400);
@@ -232,18 +228,6 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
                     clawright.setPosition(ScoringRight);
                     sleep(400);
                     arm(-1800);
-                    sleep(400);
-                    turn(-900,-900,900,900);
-                    sleep(400);
-                    move(1750,1750,1750,1750);
-                    sleep(400);
-                    arm(1800);
-                    sleep(400);
-                    clawright.setPosition(OpenRight);
-                    sleep(400);
-                    arm(-1800);
-                    sleep(400);
-                    clawright.setPosition(ScoringRight);
                     sleep(400);
                     turn(-900,-900,900,900);
                     sleep(400);
