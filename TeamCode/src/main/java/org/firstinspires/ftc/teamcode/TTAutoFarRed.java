@@ -206,7 +206,7 @@ public class TTAutoFarRed extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 2");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    move(1050,1050,1050,1050);//move away from wall
+                    move(1050,1050,1050,1050);//move away from wall l
                     sleep(100);
                     clawright.setPosition(OpenRight);
                     sleep(100);

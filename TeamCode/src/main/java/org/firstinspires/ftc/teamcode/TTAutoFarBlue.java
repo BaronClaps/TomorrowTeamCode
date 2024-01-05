@@ -208,7 +208,7 @@ public class TTAutoFarBlue extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 2");
                     armROT.setPosition(OpenArm);
                     clawrotate.setPosition(GroundClaw);
-                    move(1050,1050,1050,1050);//move away from wall
+                    move(1050,1050,1050,1050);//move away from walll
                     sleep(250);
                     clawright.setPosition(OpenRight);
                     sleep(250);

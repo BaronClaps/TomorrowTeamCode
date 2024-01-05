@@ -198,7 +198,7 @@ public class TTAutoBlue extends LinearOpMode{
                     sleep(400);
                     turn(-300, -300, 300, 300);//turns to face zone 1
                     sleep(400);
-                    move(300,300,300,300);
+                    move(400,400,400,400);
                     sleep(400);
                     clawright.setPosition(OpenRight);
                     sleep(400);
@@ -210,7 +210,7 @@ public class TTAutoBlue extends LinearOpMode{
                     sleep(400);
                     move(1100, 1100, 1100, 1100);
                     sleep(400);
-                    move(200,-200,-200,200);
+                    move(600,-600,-600,600);
                     sleep(400);
                     armROT.setPosition(ScoringArm);
                     sleep(400);
@@ -243,7 +243,7 @@ public class TTAutoBlue extends LinearOpMode{
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 100 && blocks[i].x < 140) {
+                if (blocks[i].x > 100 && blocks[i].x < 160) {
                     telemetry.addLine("Hooray!!! Area 2");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
@@ -268,7 +268,7 @@ public class TTAutoBlue extends LinearOpMode{
                     sleep(400);
                     arm(1500);
                     sleep(400);
-                    move(400,400,400,400);
+                    move(450,450,450,450);
                     sleep(400);
                     clawleft.setPosition(OpenLeft);
                     sleep(400);
@@ -290,7 +290,7 @@ public class TTAutoBlue extends LinearOpMode{
 
                 }
                 //----------------------------3----------------------------\\
-                if (blocks[i].x > 140) {
+                if (blocks[i].x > 160) {
                     telemetry.addLine("Hooray!!! Area 3");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
@@ -301,7 +301,7 @@ public class TTAutoBlue extends LinearOpMode{
                     sleep(400);
                     turn(300, 300, -300, -300);//turns to face zone 3
                     sleep(400);
-                    move(300,300,300,300);
+                    move(400,400,400,400);
                     sleep(400);
                     clawright.setPosition(OpenRight);
                     sleep(400);
@@ -323,7 +323,7 @@ public class TTAutoBlue extends LinearOpMode{
                     sleep(400);
                     arm(1500);
                     sleep(400);
-                    move(300,300,300,300);
+                    move(400,400,400,400); //m
                     sleep(400);
                     clawleft.setPosition(OpenLeft);
                     sleep(400);
