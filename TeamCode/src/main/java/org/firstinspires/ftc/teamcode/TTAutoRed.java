@@ -72,9 +72,9 @@ import java.util.concurrent.TimeUnit;
  *
  */
 
-@Autonomous(name="TDAutoHuskyFarRED")
+@Autonomous(name="TTAutoRed")
 
-public class TDAutoHuskyFarRED extends LinearOpMode{
+public class TTAutoRed extends LinearOpMode{
 
     private final int READ_PERIOD = 1;
 
@@ -97,6 +97,16 @@ public class TDAutoHuskyFarRED extends LinearOpMode{
     private Servo clawleft  = null; //es1
     private Servo clawright = null; //es2
     private Servo hangservo = null; //es4
+    double ClosedLeft = 0;
+    double ClosedRight = 0.2;
+    double ScoringClaw = 0.5;
+    double ScoringArm = 0.23;
+    double OpenLeft = 0.2;
+    double OpenRight = 0;
+    double GroundClaw = 0.4;
+    double GroundArm = 0.1125; //0.975;
+    double armR;
+    double clawROT;
 
 
 
@@ -125,11 +135,6 @@ public class TDAutoHuskyFarRED extends LinearOpMode{
         huskyLens = hardwareMap.get(HuskyLens.class, "huskylens");
         hangservo = hardwareMap.get(Servo.class, "hangservo");
 
-        sleep(100);
-        clawleft.setPosition(0.175);
-        clawright.setPosition(0);
-        sleep(100);
-        clawrotate.setPosition(0.6);
 
         //TODO initialize the sensors and motors you added
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -162,7 +167,8 @@ public class TDAutoHuskyFarRED extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-
+            armROT.setPosition(armR);
+            clawrotate.setPosition(clawROT);
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -174,65 +180,158 @@ public class TDAutoHuskyFarRED extends LinearOpMode{
                 telemetry.addData("location?", blocks[i].x);// this gives you just x
                 //TODO ensure your x values of the husky lens are appropriate to the desired areas
                 //----------------------------1----------------------------\\
-                if (blocks[i].x < 60) {
+                if (blocks[i].x < 80) {
                     telemetry.addLine("Hooray!!! Area 1");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(-400, -400, 400, 400);//turns to face zone 1
-                    arm(-1800);
-                    sleep(200);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
                     sleep(100);
-                    arm(1800);// pulls the arm back
+                    move(300,300,300,300);//move away from wall
                     sleep(100);
-                    clawright.setPosition(0);// closes the claw
-                    sleep(40000);
+                    turn(-300, -300, 300, 300);//turns to face zone 1
+                    sleep(100);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawright.setPosition(OpenRight);
+                    sleep(100);
+                    move(-300,-300,-300,-300);
+                    sleep(100);
+                    clawright.setPosition(ClosedRight);
+                    sleep(100);
+                    turn(300,300,-300,-300);
+                    sleep(100);
+                    turn(900,900,-900,-900);
+                    sleep(100);
+                    move(1100, 1100, 1100, 1100);
+                    sleep(100);
+                    move(-400,400,400,-400);
+                    sleep(100);
+                    armROT.setPosition(ScoringArm);
+                    sleep(100);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(100);
+                    arm(1500);
+                    sleep(100);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(100);
+                    move(-300, -300, -300, -300);
+                    sleep(100);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(100);
+                    clawleft.setPosition(ClosedLeft);
+                    sleep(100);
+                    arm(-1500);
+                    sleep(400);
+                    armROT.setPosition(GroundArm);
+                    sleep(400);
+                    move(1000,-1000,-1000,1000);
+                    sleep(100);
+                    move(400,400,400,400);
+                    sleep(1000000);
                 } else {
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 60 && blocks[i].x < 180) {
+                if (blocks[i].x > 100 && blocks[i].x < 180) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(750,750,750,750); //move away from wall
-                    sleep(400);
-                    arm(-1200);
-                    sleep(200);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
+                    move(1050,1050,1050,1050);//move away from wall
                     sleep(100);
-                    arm(1200);// pulls the arm back
+                    clawright.setPosition(OpenRight);
                     sleep(100);
-                    clawright.setPosition(0);// closes the claw
-                    sleep(40000);
+                    move(-300,-300, -300, -300);
+                    sleep(100);
+                    clawright.setPosition(ClosedRight);
+                    sleep(100);
+                    turn(1000,1000,-1000,-1000);
+                    sleep(100);
+                    move(1000,1000,1000,1000);
+                    sleep(100);
+                    armROT.setPosition(ScoringArm);
+                    sleep(100);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(100);
+                    arm(1500);
+                    sleep(100);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(100);
+                    move(-300, -300, -300, -300);
+                    sleep(100);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(100);
+                    clawleft.setPosition(ClosedLeft);
+                    sleep(100);
+                    arm(-1500);
+                    sleep(100);
+                    armROT.setPosition(GroundArm);
+                    sleep(100);
+                    move(1200,-1200,-1200,1200);
+                    sleep(100);
+                    move(400,400,400,400);
+                    sleep(100000);
                 } else {
 
                 }
                 //----------------------------3----------------------------\\
                 if (blocks[i].x > 180) {
                     telemetry.addLine("Hooray!!! Area 3");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(400, 400, -400, -400);//turns to face zone 1
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
                     sleep(100);
-                    arm(-1800);
-                    sleep(200);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
+                    move(300,300,300,300);//move away from wall
                     sleep(100);
-                    arm(1800);// pulls the arm back
+                    turn(300, 300, -300, -300);//turns to face zone 3
                     sleep(100);
-                    clawright.setPosition(0);// closes the claw
-                    sleep(40000);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawright.setPosition(OpenRight);
+                    sleep(100);
+                    move(-300,-300,-300,-300);
+                    sleep(100);
+                    clawright.setPosition(ClosedRight);
+                    sleep(100);
+                    turn(300,300,-300,-300);
+                    sleep(100);
+                    turn(900,900,-900,-900);
+                    sleep(100);
+                    move(1100, 1100, 1100, 1100);
+                    sleep(100);
+                    move(400,-400,-400,400);
+                    sleep(100);
+                    armROT.setPosition(ScoringArm);
+                    sleep(100);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(100);
+                    arm(1500);
+                    sleep(100);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(100);
+                    move(-300, -300, -300, -300);
+                    sleep(100);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(100);
+                    clawleft.setPosition(ClosedLeft);
+                    sleep(100);
+                    arm(-1500);
+                    sleep(100);
+                    armROT.setPosition(GroundArm);
+                    sleep(100);
+                    move(1300,-1300,-1300,1300);
+                    sleep(100);
+                    move(400,400,400,400);
+                    sleep(1000000);
+
+                    //pixelspot = 3;
                 }
 
             }
@@ -319,10 +418,10 @@ public class TDAutoHuskyFarRED extends LinearOpMode{
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        rightBackDrive.setPower(0.2);
-        rightFrontDrive.setPower(0.2);
-        leftFrontDrive.setPower(0.2);
-        leftBackDrive.setPower(0.2);
+        rightBackDrive.setPower(0.4);
+        rightFrontDrive.setPower(0.4);
+        leftFrontDrive.setPower(0.4);
+        leftBackDrive.setPower(0.4);
 
         while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             sleep(25);

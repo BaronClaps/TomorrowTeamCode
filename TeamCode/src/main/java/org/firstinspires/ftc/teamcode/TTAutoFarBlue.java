@@ -74,9 +74,9 @@ import java.util.concurrent.TimeUnit;
  *
  */
 
-@Autonomous(name="TDAutoHuskyFarBLUE")
+@Autonomous(name="TTAutoFarBlue")
 
-public class TDAutoHuskyFarBLUE extends LinearOpMode{
+public class TTAutoFarBlue extends LinearOpMode{
 
     private final int READ_PERIOD = 1;
 
@@ -99,7 +99,16 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
     private Servo clawleft  = null; //es1
     private Servo clawright = null; //es2
     private Servo hangservo = null; //es4
-
+    double ClosedLeft = 0;
+    double ClosedRight = 0.2;
+    double ScoringClaw = 0.5;
+    double ScoringArm = 0.23;
+    double OpenLeft = 0.2;
+    double OpenRight = 0;
+    double GroundClaw = 0.4;
+    double OpenArm = 0.1225; //0.975;
+    double armR;
+    double clawROT;
 
 
 
@@ -119,19 +128,11 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
         rightBackDrive = hardwareMap.get(DcMotor.class, "rb");
         arm = hardwareMap.get(DcMotor.class, "arm");
         armROT = hardwareMap.get(Servo.class, "armROT");
-        hang      = hardwareMap.get(DcMotor.class, "hang");
         clawrotate = hardwareMap.get(Servo.class, "clawrotate");
         airplane  = hardwareMap.get(Servo.class, "airplane");
         clawleft = hardwareMap.get(Servo.class, "clawleft");
         clawright = hardwareMap.get(Servo.class, "clawright");
         huskyLens = hardwareMap.get(HuskyLens.class, "huskylens");
-        hangservo = hardwareMap.get(Servo.class, "hangservo");
-
-        sleep(100);
-        clawleft.setPosition(0.175);
-        clawright.setPosition(0);
-        sleep(100);
-        clawrotate.setPosition(0.6);
 
         //TODO initialize the sensors and motors you added
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -156,7 +157,8 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
         } else {
             telemetry.addData(">>", "Press start to continue");
         }//makes sure the huskylens is talking to the control hub
-        huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);// can change to other algorithms
+        huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
+// can change to other algorithms
 
 
         // Wait for driver to press start
@@ -166,7 +168,8 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-
+            armROT.setPosition(armR);
+            clawrotate.setPosition(clawROT);
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -180,64 +183,65 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
                 //----------------------------1----------------------------\\
                 if (blocks[i].x < 100) {
                     telemetry.addLine("Hooray!!! Area 1");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(-225, -225, 225, 225);//turns to face zone 1
-                    sleep(400);
-                    arm(-1800);
-                    sleep(400);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(400);
-                    arm(1800);// pulls the arm back
-                    sleep(400);
-                    clawright.setPosition(0);// closes the claw
-                    sleep(40000);
+                    armROT.setPosition(OpenArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
+                    sleep(250);
+                    move(300,300,300,300);//move away from wall
+                    sleep(250);
+                    turn(-300, -300, 300, 300);//turns to face zone 1
+                    sleep(250);
+                    move(300,300,300,300);
+                    sleep(250);
+                    clawright.setPosition(OpenRight);
+                    sleep(250);
+                    move(-300,-300,-300,-300);
+                    sleep(250);
+                    clawright.setPosition(ClosedRight);
+                    sleep(1000000);
                 } else {
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 100 && blocks[i].x < 180) {
+                if (blocks[i].x > 100 && blocks[i].x < 140) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    arm(-1800);
-                    sleep(200);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(100);
-                    arm(1800);// pulls the arm back
-                    sleep(100);
-                    clawright.setPosition(0);// closes the claw
-                    sleep(40000);
+                    armROT.setPosition(OpenArm);
+                    clawrotate.setPosition(GroundClaw);
+                    move(1050,1050,1050,1050);//move away from wall
+                    sleep(250);
+                    clawright.setPosition(OpenRight);
+                    sleep(250);
+                    move(-300,-300, -300, -300);
+                    sleep(250);
+                    clawright.setPosition(ClosedRight);
+                    sleep(250);
+                    turn(-1000,-1000,1000,1000);
+                    sleep(100000);
                 } else {
 
                 }
                 //----------------------------3----------------------------\\
-                if (blocks[i].x > 180) {
+                if (blocks[i].x > 140) {
                     telemetry.addLine("Hooray!!! Area 3");
-                    hangservo.setPosition(.6);
-                    clawrotate.setPosition(.3);
-                    armROT.setPosition(0.095);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(400, 400, -400, -400);//turns to face zone 1
-                    sleep(100);
-                    arm(-1800);
-                    sleep(200);
-                    clawright.setPosition(0.175);//scores pixel (this acutally moves claw LEFT??!!??)
-                    sleep(100);
-                    arm(1800);// pulls the arm back
-                    sleep(100);
-                    clawright.setPosition(0);//e closes the claw
-                    sleep(40000);
+                    armROT.setPosition(OpenArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
+                    sleep(250);
+                    move(300,300,300,300);//move away from wall
+                    sleep(250);
+                    turn(300, 300, -300, -300);//turns to face zone 3
+                    sleep(250);
+                    move(300,300,300,300);
+                    sleep(250);
+                    clawright.setPosition(OpenRight);
+                    sleep(250);
+                    move(-300,-300,-300,-300);
+                    sleep(250);
+                    clawright.setPosition(ClosedRight);
+                    sleep(1000000);
+
                 }
 
             }
@@ -246,16 +250,16 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
 
 
     public void arm(int LGY){  arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //
-         arm.setTargetPosition(LGY);
-         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //
+        arm.setTargetPosition(LGY);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-         arm.setPower(1);
+        arm.setPower(-1);
 
         while (arm.isBusy()/* & armY.isBusy()*/) {
-        sleep(25);
-    } arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-         arm.setPower(0);
+            sleep(25);
+        } arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setPower(0);
     }
 
     public void move(int lf, int lb, int rf, int rb) {
@@ -309,10 +313,10 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        rightBackDrive.setPower(0.2);
-        rightFrontDrive.setPower(0.2);
-        leftFrontDrive.setPower(0.2);
-        leftBackDrive.setPower(0.2);
+        rightBackDrive.setPower(0.4);
+        rightFrontDrive.setPower(0.4);
+        leftFrontDrive.setPower(0.4);
+        leftBackDrive.setPower(0.4);
 
         while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             sleep(25);
@@ -330,4 +334,3 @@ public class TDAutoHuskyFarBLUE extends LinearOpMode{
     }
 
 }
-

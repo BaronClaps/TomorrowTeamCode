@@ -1,5 +1,3 @@
-
-
 /* Copyright (c) 2023 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -74,9 +72,9 @@ import java.util.concurrent.TimeUnit;
  *
  */
 
-@Autonomous(name="TDAutoHuskyBLUE")
+@Autonomous(name="TTAutoFarRed")
 
-public class TDAutoHuskyBLUE extends LinearOpMode{
+public class TTAutoFarRed extends LinearOpMode{
 
     private final int READ_PERIOD = 1;
 
@@ -101,14 +99,15 @@ public class TDAutoHuskyBLUE extends LinearOpMode{
     private Servo hangservo = null; //es4
     double ClosedLeft = 0;
     double ClosedRight = 0.2;
-    double ScoringClaw = 0.4;
+    double ScoringClaw = 0.5;
     double ScoringArm = 0.23;
     double OpenLeft = 0.2;
     double OpenRight = 0;
-    double OpenClaw = 0.6;
-    double OpenArm = 0.975;
-double armR;
-double clawR = 0.4;
+    double GroundClaw = 0.4;
+    double GroundArm = 0.1175; //0.975;
+    double armR;
+    double clawROT;
+
 
 
 
@@ -136,16 +135,11 @@ double clawR = 0.4;
         huskyLens = hardwareMap.get(HuskyLens.class, "huskylens");
         hangservo = hardwareMap.get(Servo.class, "hangservo");
 
-        clawleft.setPosition(0);
-        clawright.setPosition(0.2);
-        sleep(400);
-
 
         //TODO initialize the sensors and motors you added
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  armROT Reduction or 90 Deg drives may require direction flips
-
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -154,7 +148,6 @@ double clawR = 0.4;
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
 
         Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS); //from huskylens example
         rateLimit.expire();
@@ -174,8 +167,7 @@ double clawR = 0.4;
         waitForStart();
 
         while (opModeIsActive()) {
-            armROT.setPosition(armR);
-            clawrotate.setPosition(clawR);
+            
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -187,82 +179,66 @@ double clawR = 0.4;
                 telemetry.addData("location?", blocks[i].x);// this gives you just x
                 //TODO ensure your x values of the husky lens are appropriate to the desired areas
                 //----------------------------1----------------------------\\
-                if (blocks[i].x < 100) {
+                if (blocks[i].x < 80) {
                     telemetry.addLine("Hooray!!! Area 1");
-                    armROT.setPosition(0.15);
-                    clawrotate.setPosition(.3);
-                    move(500,500,500,500);//move away from wall
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
+                    sleep(100);
+                    move(300,300,300,300);//move away from wall
                     sleep(100);
                     turn(-300, -300, 300, 300);//turns to face zone 1
                     sleep(100);
-                    arm(1800);
+                    move(300,300,300,300);
                     sleep(100);
-                    clawright.setPosition(0);
+                    clawright.setPosition(OpenRight);
                     sleep(100);
-                    arm(-1800);
+                    move(-300,-300,-300,-300);
                     sleep(100);
-                    clawright.setPosition(0.2);
-                    sleep(100);
-                    clawrotate.setPosition(.3);
-                    sleep(100);
-                    turn(-450,-450,450,450);
-                    sleep(100);
-                    turn(-450,-150,450,450);
-                    sleep(100);
-                    move(1050, 1050, 1050, 1050);
+                    clawright.setPosition(ClosedRight);
                     sleep(1000000);
-
-
                 } else {
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 100 && blocks[i].x < 140) {
+                if (blocks[i].x > 100 && blocks[i].x < 180) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    armR = 0.1175;
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
                     move(1050,1050,1050,1050);//move away from wall
-                    sleep(400);
-                   // arm(1800);
-                    //sleep(400);
+                    sleep(100);
                     clawright.setPosition(OpenRight);
-                    sleep(400);
+                    sleep(100);
                     move(-300,-300, -300, -300);
-                    sleep(400);
+                    sleep(100);
                     clawright.setPosition(ClosedRight);
-                    //sleep(400);/
-                    //arm(-1800);
-                    sleep(400);
-                    turn(-1000,-1000,1000,1000);
-                    sleep(400);
-                    move(1300,1300,1300,1300);
-                    sleep(400);
-                    armR = ScoringArm;
-                    sleep(400);
-                    arm(1500);
-                    sleep(400);
-                    clawR = ScoringClaw;
-                    sleep(400);
-                    clawleft.setPosition(OpenLeft);
-                    sleep(400);
-                    move(-100, -100, -100, -100);
                     sleep(100000);
-
-
-
-
-
                 } else {
 
                 }
                 //----------------------------3----------------------------\\
-                if (blocks[i].x > 140) {
+                if (blocks[i].x > 180) {
                     telemetry.addLine("Hooray!!! Area 3");
-                    hangservo.setPosition(0.6);
-                    sleep(400);
-                    move(400,400,400,400);//move away from wall
-                    sleep(400);
-                    turn(-225, -225, 225, 225);//turns to face zone 1
-                    sleep(400);
+                    armROT.setPosition(GroundArm);
+                    clawrotate.setPosition(GroundClaw);
+                    clawright.setPosition(ClosedLeft);
+                    clawright.setPosition(ClosedRight);
+                    sleep(100);
+                    move(300,300,300,300);//move away from wall
+                    sleep(100);
+                    turn(300, 300, -300, -300);//turns to face zone 3
+                    sleep(100);
+                    move(300,300,300,300);
+                    sleep(100);
+                    clawright.setPosition(OpenRight);
+                    sleep(100);
+                    move(-300,-300,-300,-300);
+                    sleep(100);
+                    clawright.setPosition(ClosedRight);
+                    sleep(1000000);
+
+                    //pixelspot = 3;
                 }
 
             }
@@ -270,17 +246,32 @@ double clawR = 0.4;
     }
 
 
-    public void arm(int LGY){  arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //
-         arm.setTargetPosition(LGY);
-         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    public void arm(int LGY) {
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //
 
-         arm.setPower(-1);
+        arm.setTargetPosition(LGY);
+        //armY.setTargetPosition(LGY);
 
-        while (arm.isBusy()/* & armY.isBusy()*/) {
-        sleep(25);
-    } arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-         arm.setPower(0);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //armY.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+
+        arm.setPower(1);
+        //armY.setPower(0.7);
+
+        while (arm.isBusy()/* && armY.isBusy()*/) {
+            sleep(25);
+        }
+
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //armY.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        arm.setPower(0);
+        //armY.setPower(0);
+
+
     }
 
     public void move(int lf, int lb, int rf, int rb) {
@@ -334,10 +325,10 @@ double clawR = 0.4;
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        rightBackDrive.setPower(0.2);
-        rightFrontDrive.setPower(0.2);
-        leftFrontDrive.setPower(0.2);
-        leftBackDrive.setPower(0.2);
+        rightBackDrive.setPower(0.4);
+        rightFrontDrive.setPower(0.4);
+        leftFrontDrive.setPower(0.4);
+        leftBackDrive.setPower(0.4);
 
         while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             sleep(25);
@@ -355,4 +346,3 @@ double clawR = 0.4;
     }
 
 }
-

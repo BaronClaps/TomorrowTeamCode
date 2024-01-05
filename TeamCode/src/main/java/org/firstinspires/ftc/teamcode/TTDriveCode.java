@@ -62,9 +62,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 
-@TeleOp(name="TTTDriveCode", group="Linear Opmode")
+@TeleOp(name="TTDriveCode", group="Linear Opmode")
 //@Disabled
-public class TTTDriveCode extends LinearOpMode {
+public class TTDriveCode extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -81,12 +81,19 @@ public class TTTDriveCode extends LinearOpMode {
     private Servo clawright = null;
     private Servo clawrotate = null;
     private int bspeed = 2;
-    private double rfspeed;
+    double rfspeed;
     private double lfspeed;
     private double rbspeed;
     private double lbspeed;
     private double armR;
-
+    double ClosedLeft = 0;
+    double ClosedRight = 0.2;
+    double ScoringClaw = 0.5;
+    double ScoringArm = 0.23;
+    double OpenLeft = 0.2;
+    double OpenRight = 0;
+    double GroundClaw = 0.4;
+    double GroundArm = 0.1125; //0.975;
 
     @Override
     public void runOpMode() {
@@ -128,8 +135,7 @@ public class TTTDriveCode extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        hangservo.setPosition(0.5);
-        armR = 0.11;
+        armR = GroundArm;
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
@@ -182,132 +188,85 @@ public class TTTDriveCode extends LinearOpMode {
 
             if(gamepad1.y)
             {
-                airplane.setPosition(0);
+                airplane.setPosition(1);
             }
             else
             {
-                airplane.setPosition(.5);
-            }
-            //-----------------------HANG--------------//
-            /*if (gamepad2.dpad_up)
-            {
-                hang.setPower(1);
-            }
-            else
-            {
-                hang.setPower(0);
+                airplane.setPosition(0.5);
             }
 
-           if (gamepad2.dpad_down)
-           {
-               hang.setPower(-1);
-           }
-           else
-           {
-               hang.setPower(0);
-           }
-
-           if (gamepad2.dpad_left)
-           {
-               hangservo.setPosition(0.5);
-           }
-
-           if (gamepad2.dpad_right)
-           {
-               hangservo.setPosition(.67);
-               //armROT.setPosition(0.15);
-               //clawrotate.setPosition(0.6);
-               //sleep(200);
-               //armROT.setPosition(0.095);
-           }
-*/
             //-------------Arm Rotate---------------------------------//
             armROT.setPosition(armR);
             if (gamepad2.left_bumper){
-                armR += 0.05;
-            }else {
-                armR += 0;
+                armR = GroundArm;
             }
+
             if (gamepad2.right_bumper){
-                armR -= 0.05;
-            }else {
-                armR += 0;
-            }
-            /*if (gamepad2.left_bumper){
-                armROT.setPosition(0.27);
-            } else{
-
-            }
-            if (gamepad2.right_bumper){
-                armROT.setPosition(0.125);
-            }else{
-
+                armR = ScoringArm;
             }
 
-            /*if (gamepad2.left_bumper)
-            {
-               armROT.setPosition(0.095);
-            }
-
-            if(gamepad2.right_bumper)
-            {
-                armROT.setPosition(0.17);
-                        //0.335
-            }
-*/
             //---------------Claw & Claw Rotate-----------------------//
             if(gamepad2.right_trigger > 0.5)
             {
-                clawright.setPosition(0.175);
-                clawleft.setPosition(0);
+                clawright.setPosition(ClosedRight);
+                clawleft.setPosition(ClosedLeft);
             }
 
             if(gamepad2.left_trigger > 0.5)
             {
-                clawright.setPosition(0);
-                clawleft.setPosition(0.175);
+                clawright.setPosition(OpenRight);
+                clawleft.setPosition(OpenLeft);
             }
 
             if(gamepad2.x)
             {
-                clawrotate.setPosition(0.4);
+                clawrotate.setPosition(GroundClaw);
             }
 
             if(gamepad2.y)
             {
-                clawrotate.setPosition(0.3);
+                clawrotate.setPosition(ScoringArm);
+
             }
 
             if(gamepad2.right_stick_button)
             {
-                clawright.setPosition(0.2);
-                clawleft.setPosition(0);
-                armR = 0.17;
-                clawrotate.setPosition(0.45);
+                clawright.setPosition(OpenRight);
+                clawleft.setPosition(OpenLeft);
+                clawrotate.setPosition(GroundClaw);
+                sleep(100);
+                armR = GroundArm;
+
             }
 
             if(gamepad2.left_stick_button)
             {
-                clawright.setPosition(0);
-                clawleft.setPosition(0.2);
-                armR = 0.095;
-                clawrotate.setPosition(0.3);
+                clawright.setPosition(ClosedRight);
+                clawleft.setPosition(ClosedLeft);
+                clawrotate.setPosition(ScoringClaw);
+                sleep(100);
+                armR = ScoringArm;
+
             }
+
             if(gamepad1.left_bumper)
             {
                 bspeed = 1;
             }
+
             if(gamepad1.right_bumper)
             {
                 bspeed = 2;
             }
+
             if(bspeed == 1)
             {
                 lfspeed = leftFrontPower/2;
                 rfspeed = rightFrontPower/2;
-                lbspeed= leftBackPower/2;
+                lbspeed = leftBackPower/2;
                 rbspeed = rightBackPower/2;
             }
+
             if(bspeed == 2)
             {
                 lfspeed = leftFrontPower;
