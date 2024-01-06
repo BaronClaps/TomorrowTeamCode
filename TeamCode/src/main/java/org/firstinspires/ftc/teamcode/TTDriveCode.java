@@ -89,11 +89,11 @@ public class TTDriveCode extends LinearOpMode {
     double ClosedLeft = 0;
     double ClosedRight = 0.2;
     double ScoringClaw = 0.5;
-    double ScoringArm = 0.23;
+    double ScoringArm = 0.18;
     double OpenLeft = 0.2;
     double OpenRight = 0;
     double GroundClaw = 0.4;
-    double GroundArm = 0.1125;       //0.975;
+    double GroundArm = 0.11; //0.975;
 
     @Override
     public void runOpMode() {

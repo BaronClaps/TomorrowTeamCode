@@ -100,14 +100,11 @@ public class TTAutoFarRed extends LinearOpMode{
     double ClosedLeft = 0;
     double ClosedRight = 0.2;
     double ScoringClaw = 0.5;
-    double ScoringArm = 0.23;
+    double ScoringArm = 0.16;
     double OpenLeft = 0.2;
     double OpenRight = 0;
     double GroundClaw = 0.4;
-    double GroundArm = 0.1175; //0.975;
-    double armR;
-    double clawROT;
-
+    double GroundArm = 0.11; //0.975;
 
 
 
@@ -149,6 +146,11 @@ public class TTAutoFarRed extends LinearOpMode{
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        clawleft.setPosition(ClosedLeft);
+        clawright.setPosition(ClosedRight);
+        armROT.setPosition(GroundArm);
+        clawrotate.setPosition(GroundClaw);
+
         Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS); //from huskylens example
         rateLimit.expire();
 
@@ -167,7 +169,7 @@ public class TTAutoFarRed extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-            
+
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -185,18 +187,16 @@ public class TTAutoFarRed extends LinearOpMode{
                     clawrotate.setPosition(GroundClaw);
                     clawright.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    move(300,300,300,300);//move away from wall
-                    sleep(100);
-                    turn(-300, -300, 300, 300);//turns to face zone 1
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
-                    move(-300,-300,-300,-300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
+                    sleep(200);
+                    move(550,550,550,550);//move away from wall
+                    sleep(200);
+                    turn(-515, -515, 515, 515);//turns to face zone 1
+                    sleep(200);
+                    move(440,440,440,440);
+                    sleep(200);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(200);
+                    move(-440,-440,-440,-440);
                     sleep(1000000);
                 } else {
 
@@ -206,13 +206,11 @@ public class TTAutoFarRed extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 2");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    move(1050,1050,1050,1050);//move away from wall l
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
+                    move(1100,1100,1100,1100);//move away from wall
+                    sleep(200);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(200);
                     move(-300,-300, -300, -300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
                     sleep(100000);
                 } else {
 
@@ -222,20 +220,18 @@ public class TTAutoFarRed extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 3");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    clawright.setPosition(ClosedLeft);
+                    clawleft.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(100);
+                    sleep(200);
                     move(300,300,300,300);//move away from wall
-                    sleep(100);
+                    sleep(200);
                     turn(300, 300, -300, -300);//turns to face zone 3
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
-                    move(-300,-300,-300,-300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
+                    sleep(200);
+                    move(450,450,450,450); //450
+                    sleep(200);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(200);
+                    move(-400,-400,-400,-400);
                     sleep(1000000);
 
                     //pixelspot = 3;

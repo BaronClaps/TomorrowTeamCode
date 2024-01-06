@@ -100,14 +100,11 @@ public class TTAutoRed extends LinearOpMode{
     double ClosedLeft = 0;
     double ClosedRight = 0.2;
     double ScoringClaw = 0.5;
-    double ScoringArm = 0.23;
+    double ScoringArm = 0.16;
     double OpenLeft = 0.2;
     double OpenRight = 0;
     double GroundClaw = 0.4;
-    double GroundArm = 0.1125; //0.975;
-    double armR;
-    double clawROT;
-
+    double GroundArm = 0.11; //0.975;
 
 
 
@@ -149,6 +146,11 @@ public class TTAutoRed extends LinearOpMode{
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        clawleft.setPosition(ClosedLeft);
+        clawright.setPosition(ClosedRight);
+        armROT.setPosition(GroundArm);
+        clawrotate.setPosition(GroundClaw);
+
         Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS); //from huskylens example
         rateLimit.expire();
 
@@ -167,8 +169,7 @@ public class TTAutoRed extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-            armROT.setPosition(armR);
-            clawrotate.setPosition(clawROT);
+
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -186,50 +187,48 @@ public class TTAutoRed extends LinearOpMode{
                     clawrotate.setPosition(GroundClaw);
                     clawright.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    move(300,300,300,300);//move away from wall
-                    sleep(100);
-                    turn(-300, -300, 300, 300);//turns to face zone 1
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
-                    move(-300,-300,-300,-300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    turn(300,300,-300,-300);
-                    sleep(100);
-                    turn(900,900,-900,-900);
-                    sleep(100);
-                    move(1100, 1100, 1100, 1100);
-                    sleep(100);
-                    move(-400,400,400,-400);
-                    sleep(100);
-                    armROT.setPosition(ScoringArm);
-                    sleep(100);
-                    clawrotate.setPosition(ScoringClaw);
-                    sleep(100);
-                    arm(1500);
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
+                    sleep(200);
+                    move(550,550,550,550);//move away from wall
+                    sleep(200);
+                    turn(-515, -515, 515, 515);//turns to face zone 1
+                    sleep(200);
+                    move(440,440,440,440);
+                    sleep(200);
                     clawleft.setPosition(OpenLeft);
-                    sleep(100);
-                    move(-300, -300, -300, -300);
-                    sleep(100);
-                    clawrotate.setPosition(GroundClaw);
-                    sleep(100);
+                    sleep(200);
+                    move(-440,-440,-440,-440);
+                    sleep(200);
                     clawleft.setPosition(ClosedLeft);
-                    sleep(100);
+                    sleep(200);
+                    turn(1625,1625,-1625,-1625);
+                    sleep(200);
+                    move(1350, 1350, 1350, 1350);
+                    sleep(200);
+                    move(-1400,1400,1400,-1400);
+                    sleep(200);
+                    armROT.setPosition(ScoringArm);
+                    sleep(200);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(200);
+                    arm(1500);
+                    sleep(200);
+                    move(320,320,320,320);
+                    sleep(200);
+                    clawright.setPosition(OpenRight);
+                    sleep(200);
+                    move(-400, -400, -400, -400);
+                    sleep(200);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(200);
+                    clawright.setPosition(ClosedRight);
+                    sleep(200);
                     arm(-1500);
                     sleep(400);
                     armROT.setPosition(GroundArm);
                     sleep(400);
-                    move(1000,-1000,-1000,1000);
-                    sleep(100);
-                    move(400,400,400,400);
+                    move(1800,-1800,-1800,1800);
+                    sleep(200);
+                    move(600,600,600,600);
                     sleep(1000000);
                 } else {
 
@@ -239,40 +238,40 @@ public class TTAutoRed extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 2");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    move(1050,1050,1050,1050);//move away from wall
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
-                    move(-300,-300, -300, -300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    turn(1000,1000,-1000,-1000);
-                    sleep(100);
-                    move(1000,1000,1000,1000);
-                    sleep(100);
-                    armROT.setPosition(ScoringArm);
-                    sleep(100);
-                    clawrotate.setPosition(ScoringClaw);
-                    sleep(100);
-                    arm(1500);
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
+                    move(1100,1100,1100,1100);//move away from wall
+                    sleep(200);
                     clawleft.setPosition(OpenLeft);
-                    sleep(100);
-                    move(-300, -300, -300, -300);
-                    sleep(100);
-                    clawrotate.setPosition(GroundClaw);
-                    sleep(100);
+                    sleep(200);
+                    move(-300,-300, -300, -300);
+                    sleep(200);
                     clawleft.setPosition(ClosedLeft);
-                    sleep(100);
+                    sleep(200);
+                    turn(1050,1050,-1050,-1050);
+                    sleep(200);
+                    move(1000,1000,1000,1000);
+                    sleep(200);
+                    armROT.setPosition(ScoringArm);
+                    sleep(200);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(200);
+                    arm(1500);
+                    sleep(200);
+                    move(400,400,400,400);
+                    sleep(200);
+                    clawright.setPosition(OpenRight);
+                    sleep(200);
+                    move(-300, -300, -300, -300);
+                    sleep(200);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(200);
+                    clawright.setPosition(ClosedRight);
+                    sleep(200);
                     arm(-1500);
-                    sleep(100);
+                    sleep(200);
                     armROT.setPosition(GroundArm);
-                    sleep(100);
+                    sleep(200);
                     move(1200,-1200,-1200,1200);
-                    sleep(100);
+                    sleep(200);
                     move(400,400,400,400);
                     sleep(100000);
                 } else {
@@ -283,51 +282,51 @@ public class TTAutoRed extends LinearOpMode{
                     telemetry.addLine("Hooray!!! Area 3");
                     armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    clawright.setPosition(ClosedLeft);
-                    clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    move(300,300,300,300);//move away from wall
-                    sleep(100);
-                    turn(300, 300, -300, -300);//turns to face zone 3
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
-                    clawright.setPosition(OpenRight);
-                    sleep(100);
-                    move(-300,-300,-300,-300);
-                    sleep(100);
-                    clawright.setPosition(ClosedRight);
-                    sleep(100);
-                    turn(300,300,-300,-300);
-                    sleep(100);
-                    turn(900,900,-900,-900);
-                    sleep(100);
-                    move(1100, 1100, 1100, 1100);
-                    sleep(100);
-                    move(400,-400,-400,400);
-                    sleep(100);
-                    armROT.setPosition(ScoringArm);
-                    sleep(100);
-                    clawrotate.setPosition(ScoringClaw);
-                    sleep(100);
-                    arm(1500);
-                    sleep(100);
-                    move(300,300,300,300);
-                    sleep(100);
-                    clawleft.setPosition(OpenLeft);
-                    sleep(100);
-                    move(-300, -300, -300, -300);
-                    sleep(100);
-                    clawrotate.setPosition(GroundClaw);
-                    sleep(100);
                     clawleft.setPosition(ClosedLeft);
-                    sleep(100);
+                    clawright.setPosition(ClosedRight);
+                    sleep(200);
+                    move(300,300,300,300);//move away from wall
+                    sleep(200);
+                    turn(300, 300, -300, -300);//turns to face zone 3
+                    sleep(200);
+                    move(450,450,450,450); //450
+                    sleep(200);
+                    clawleft.setPosition(OpenLeft);
+                    sleep(200);
+                    move(-400,-400,-400,-400);
+                    sleep(200);
+                    clawleft.setPosition(ClosedLeft);
+                    sleep(200);
+                    turn(875,875,-875,-875);
+                    sleep(200);
+                    move(1050, 1050, 1050, 1050);
+                    sleep(200);
+                    move(-500,500,500,-500);
+                    sleep(200);
+                    armROT.setPosition(ScoringArm);
+                    sleep(200);
+                    clawrotate.setPosition(ScoringClaw);
+                    sleep(200);
+                    arm(1500);
+                    sleep(200);
+                    move(-500,500,500,-500);
+                    sleep(200);
+                    move(400,400,400,400);
+                    sleep(200);
+                    clawright.setPosition(OpenRight);
+                    sleep(200);
+                    move(-300, -300, -300, -300);
+                    sleep(200);
+                    clawrotate.setPosition(GroundClaw);
+                    sleep(200);
+                    clawright.setPosition(ClosedRight);
+                    sleep(200);
                     arm(-1500);
-                    sleep(100);
+                    sleep(200);
                     armROT.setPosition(GroundArm);
-                    sleep(100);
-                    move(1300,-1300,-1300,1300);
-                    sleep(100);
+                    sleep(200);
+                    move(1100,-1100,-1100,1100);
+                    sleep(200);
                     move(400,400,400,400);
                     sleep(1000000);
 

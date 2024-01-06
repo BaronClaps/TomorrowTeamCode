@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 import java.util.concurrent.TimeUnit;
@@ -102,13 +103,12 @@ public class TTAutoFarBlue extends LinearOpMode{
     double ClosedLeft = 0;
     double ClosedRight = 0.2;
     double ScoringClaw = 0.5;
-    double ScoringArm = 0.23;
+    double ScoringArm = 0.18;
     double OpenLeft = 0.2;
     double OpenRight = 0;
     double GroundClaw = 0.4;
-    double OpenArm = 0.1225; //0.975;
-    double armR;
-    double clawROT;
+    double GroundArm = 0.11; //0.975;
+
 
 
 
@@ -144,6 +144,10 @@ public class TTAutoFarBlue extends LinearOpMode{
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        clawleft.setPosition(ClosedLeft);
+        clawright.setPosition(ClosedRight);
+
+
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -158,8 +162,9 @@ public class TTAutoFarBlue extends LinearOpMode{
             telemetry.addData(">>", "Press start to continue");
         }//makes sure the huskylens is talking to the control hub
         huskyLens.selectAlgorithm(HuskyLens.Algorithm.COLOR_RECOGNITION);
-// can change to other algorithms
 
+        armROT.setPosition(GroundArm);
+        clawrotate.setPosition(GroundClaw);
 
         // Wait for driver to press start
         telemetry.addData("Camera preview on/off", "3 dots, Camera Stream");
@@ -168,8 +173,8 @@ public class TTAutoFarBlue extends LinearOpMode{
         waitForStart();
 
         while (opModeIsActive()) {
-            armROT.setPosition(armR);
-            clawrotate.setPosition(clawROT);
+
+
             if (!rateLimit.hasExpired()) {
                 continue;
             }
@@ -183,63 +188,58 @@ public class TTAutoFarBlue extends LinearOpMode{
                 //----------------------------1----------------------------\\
                 if (blocks[i].x < 100) {
                     telemetry.addLine("Hooray!!! Area 1");
-                    armROT.setPosition(OpenArm);
+                    armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
                     clawright.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(250);
-                    move(300,300,300,300);//move away from wall
-                    sleep(250);
-                    turn(-300, -300, 300, 300);//turns to face zone 1
-                    sleep(250);
-                    move(300,300,300,300);
-                    sleep(250);
+                    sleep(200);
+                    move(325,325,325,325);//move away from wall
+                    sleep(200);
+                    turn(-350, -350, 350, 350);//turns to face zone 1
+                    sleep(200);
+                    move(600,600,600,600);
+                    sleep(200);
                     clawright.setPosition(OpenRight);
-                    sleep(250);
-                    move(-300,-300,-300,-300);
-                    sleep(250);
-                    clawright.setPosition(ClosedRight);
+                    sleep(200);
+                    move(-500,-500,-500,-500);
                     sleep(1000000);
                 } else {
 
                 }
                 //----------------------------2----------------------------\\
-                if (blocks[i].x > 100 && blocks[i].x < 140) {
+                if (blocks[i].x > 100 && blocks[i].x < 170) {
                     telemetry.addLine("Hooray!!! Area 2");
-                    armROT.setPosition(OpenArm);
+                    armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
-                    move(1050,1050,1050,1050);//move away from walll
-                    sleep(250);
-                    clawright.setPosition(OpenRight);
-                    sleep(250);
-                    move(-300,-300, -300, -300);
-                    sleep(250);
+                    clawright.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(250);
-                    turn(-1000,-1000,1000,1000);
+                    sleep(200);
+                    move(1250,1250,1250,1250); //move away from wall
+                    sleep(200);
+                    clawright.setPosition(OpenRight);
+                    sleep(200);
+                    move(-300,-300, -300, -300);
                     sleep(100000);
                 } else {
 
                 }
                 //----------------------------3----------------------------\\
-                if (blocks[i].x > 140) {
+                if (blocks[i].x > 170) {
                     telemetry.addLine("Hooray!!! Area 3");
-                    armROT.setPosition(OpenArm);
+                    armROT.setPosition(GroundArm);
                     clawrotate.setPosition(GroundClaw);
                     clawright.setPosition(ClosedLeft);
                     clawright.setPosition(ClosedRight);
-                    sleep(250);
-                    move(300,300,300,300);//move away from wall
-                    sleep(250);
-                    turn(300, 300, -300, -300);//turns to face zone 3
-                    sleep(250);
-                    move(300,300,300,300);
-                    sleep(250);
+                    sleep(200);
+                    move(500,500,500,500);//move away from wall
+                    sleep(200);
+                    turn(450, 450, -350, -350);//turns to face zone 3
+                    sleep(200);
+                    move(450,450,450,450);
+                    sleep(200);
                     clawright.setPosition(OpenRight);
-                    sleep(250);
-                    move(-300,-300,-300,-300);
-                    sleep(250);
-                    clawright.setPosition(ClosedRight);
+                    sleep(200);
+                    move(-500,-500,-500,-500);
                     sleep(1000000);
 
                 }
@@ -278,10 +278,10 @@ public class TTAutoFarBlue extends LinearOpMode{
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        rightBackDrive.setPower(0.4);
-        rightFrontDrive.setPower(0.4);
-        leftFrontDrive.setPower(0.4);
-        leftBackDrive.setPower(0.4);
+        rightBackDrive.setPower(0.3);
+        rightFrontDrive.setPower(0.3);
+        leftFrontDrive.setPower(0.3);
+        leftBackDrive.setPower(0.3);
 
         while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             sleep(25);
@@ -313,10 +313,10 @@ public class TTAutoFarBlue extends LinearOpMode{
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        rightBackDrive.setPower(0.4);
-        rightFrontDrive.setPower(0.4);
-        leftFrontDrive.setPower(0.4);
-        leftBackDrive.setPower(0.4);
+        rightBackDrive.setPower(0.3);
+        rightFrontDrive.setPower(0.3);
+        leftFrontDrive.setPower(0.3);
+        leftBackDrive.setPower(0.3);
 
         while (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             sleep(25);
